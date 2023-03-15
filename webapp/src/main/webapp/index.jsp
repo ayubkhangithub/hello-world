@@ -3,159 +3,87 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery</title>
+    <title>Faclities Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <?php include "menu.php"; ?>
-    <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .header {
-        text-align: center;
-        padding: 32px;
-    }
-
-    .row {
-        display: -ms-flexbox;
-        /* IE 10 */
-        display: flex;
-        -ms-flex-wrap: wrap;
-        /* IE 10 */
-        flex-wrap: wrap;
-        padding: 0 4px;
-    }
-
-    /* Create two equal columns that sits next to each other */
-    .column {
-        -ms-flex: 50%;
-        /* IE 10 */
-        flex: 50%;
-        padding: 0 4px;
-    }
-
-    .column img {
-        margin-top: 8px;
-        vertical-align: middle;
-    }
-
-    /* Style the buttons */
-    .btn {
-        border: none;
-        outline: none;
-        padding: 10px 16px;
-        background-color: #f1f1f1;
-        cursor: pointer;
-        font-size: 18px;
-    }
-
-    .btn:hover {
-        background-color: #ddd;
-    }
-
-    .btn.active {
-        background-color: #666;
-        color: white;
-    }
-    </style>
+    <script>
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    </script>
 </head>
 
 <body>
-    <section class="container">
-        <!-- Header -->
-        <div class="header" id="myHeader">
-            <h1 class="text-primary">Our Gallery</h1>
-            <p>All Events and function images gallery</p>
-            <button class="btn" onclick="one()">1</button>
-            <button class="btn active" onclick="two()">2</button>
-            <button class="btn" onclick="four()">4</button>
+    <!-- Faclities Details section -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="my-4 p-5 bg-primary text-white rounded text-center ">
+                    <h1 class="mb-3">Faclities Details</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                        aliquip
+                        ex ea commodo consequat..</p>
+                </div>
+                <div class="add float-right mb-3">
+
+                    <a href="Faclities/create.php" class="btn btn-success"><i class="fa fa-plus"></i> Add New Faclity</a>
+                </div>
+
+                <?php
+
+                // Include database file
+                require_once "Faclities/config.php";
+
+                // Attempt select query execution
+                $sql = "SELECT * FROM employees_info";
+                if ($result = mysqli_query($link, $sql)) {
+                    if (mysqli_num_rows($result) > 0) {
+                        echo '<table class="table table-bordered table-striped">';
+                        echo "<thead>";
+                        echo "<tr>";
+                        echo "<th>Sl No.</th>";
+                        echo "<th>Full Name</th>";
+                        echo "<th>Address</th>";
+                        echo "<th>Contact Number</th>";
+                        echo "<th>E-mail</th>";
+                        echo "<th>Action</th>";
+                        echo "</tr>";
+                        echo "</thead>";
+                        echo "<tbody>";
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo "<tr>";
+                            echo "<td>" . $row['id'] . "</td>";
+                            echo "<td>" . $row['name'] . "</td>";
+                            echo "<td>" . $row['address'] . "</td>";
+                            echo "<td>" . $row['number'] . "</td>";
+                            echo "<td>" . $row['email'] . "</td>";
+                            echo "<td>";
+                            echo '<a href="Faclities/read.php?id=' . $row['id'] . '" class="mr-3 text-secondary" title="View Record" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
+                            echo '<a href="Faclities/update.php?id=' . $row['id'] . '" class="mr-3 text-primary" title="Update Record" data-toggle="tooltip"><span class="fa fa-edit"></span></a>';
+                            echo '<a href="Faclities/delete.php?id=' . $row['id'] . '" class="mr-3 text-danger" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                        echo "</tbody>";
+                        echo "</table>";
+                        // Free result set
+                        mysqli_free_result($result);
+                    } else {
+                    echo '<a href="Faclities/create.php" class="btn btn-success"><i class="fa fa-plus"></i> Add New Faclity</a>';
+                                           
+                    }
+                } else {
+                    echo "Oops! Something went wrong. Please try again later.";
+                }
+                // Close connection
+                mysqli_close($link);
+                ?>
+            </div>
         </div>
-
-        <!-- Photo Grid -->
-        <div class="row mb-5">
-            <div class="column">
-                <img src="images/gallery/1.jpg" style="width:100%">
-                <img src="images/gallery/gallery-2.jpg" style="width:100%">
-                <img src="images/gallery/3.jpg" style="width:100%">
-                <img src="images/gallery/gallery-4.jpg" style="width:100%">
-                <img src="images/gallery/gallery-5.jpg" style="width:100%">
-                <img src="images/gallery/gallery-6.jpg" style="width:100%">
-                <img src="images/gallery/gallery-7.jpg" style="width:100%">
-            </div>
-            <div class="column">
-                <img src="images/gallery/gallery-9.jpg" style="width:100%">
-                <img src="images/gallery/gallery-8.jpg" style="width:100%">
-                <img src="images/gallery/gallery-7.jpg" style="width:100%">
-                <img src="images/gallery/5.jpg" style="width:100%">
-                <img src="images/gallery/gallery-4.jpg" style="width:100%">
-                <img src="images/gallery/gallery-3.jpg" style="width:100%">
-            </div>
-            <div class="column">
-                <img src="images/gallery/gallery-1.jpg" style="width:100%">
-                <img src="images/gallery/2.jpg" style="width:100%">
-                <img src="images/gallery/gallery-9.jpg" style="width:100%">
-                <img src="images/gallery/gallery-8.jpg" style="width:100%">
-                <img src="images/gallery/gallery-7.jpg" style="width:100%">
-                <img src="images/gallery/gallery-6.jpg" style="width:100%">
-                <img src="images/gallery/gallery-4.jpg" style="width:100%">
-            </div>
-            <div class="column">
-                <img src="images/gallery/gallery-9.jpg" style="width:100%">
-                <img src="images/gallery/2.jpg" style="width:100%">
-                <img src="images/gallery/gallery-7.jpg" style="width:100%">
-                <img src="images/gallery/gallery-8.jpg" style="width:100%">
-                <img src="images/gallery/gallery-6.jpg" style="width:100%">
-                <img src="images/gallery/4.jpg" style="width:100%">
-            </div>
-        </div>
-        </section>
-        <script>
-        // Get the elements with class="column"
-        var elements = document.getElementsByClassName("column");
-
-        // Declare a loop variable
-        var i;
-
-        // Full-width images
-        function one() {
-            for (i = 0; i < elements.length; i++) {
-                elements[i].style.msFlex = "100%"; // IE10
-                elements[i].style.flex = "100%";
-            }
-        }
-
-        // Two images side by side
-        function two() {
-            for (i = 0; i < elements.length; i++) {
-                elements[i].style.msFlex = "50%"; // IE10
-                elements[i].style.flex = "50%";
-            }
-        }
-
-        // Four images side by side
-        function four() {
-            for (i = 0; i < elements.length; i++) {
-                elements[i].style.msFlex = "25%"; // IE10
-                elements[i].style.flex = "25%";
-            }
-        }
-
-        // Add active class to the current button (highlight it)
-        var header = document.getElementById("myHeader");
-        var btns = header.getElementsByClassName("btn");
-        for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function() {
-                var current = document.getElementsByClassName("active");
-                current[0].className = current[0].className.replace(" active", "");
-                this.className += " active";
-            });
-        }
-        </script>
-        <?php include "footer.php"; ?>
+    </div>
+    <?php include "footer.php"; ?>
 
 </body>
 
